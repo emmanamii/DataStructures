@@ -1,4 +1,4 @@
-package com.mycompany.palindrome;
+//This checks if parentheses () are balanced. Does not check for [] or {}
 
 import java.util.Scanner;
 import java.util.Stack;
