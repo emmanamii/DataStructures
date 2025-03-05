@@ -1,4 +1,4 @@
-package com.mycompany.recursions; 
+//Some recursive functions
 
 public class Functions {
     
@@ -10,6 +10,14 @@ public class Functions {
         return 1+ strLength(string.substring(1));
                 //at the end: return 1+0;
     }
+    
+    public static Integer gcd(Integer num1, Integer num2){
+        //Assume num1 > num2
+        if(num1%num2 == 0){
+            return num2;
+        }
+        return gcd(num2, num1%num2);
+    }    
     
     public static Integer factorial(Integer num){
         //Input: 5 returns 120. 5*4*3*2*1 = 120
