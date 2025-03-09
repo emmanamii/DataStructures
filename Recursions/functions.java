@@ -121,6 +121,21 @@ public class Functions {
         return array[index] * productOfAllNumbers(array, index+1);
     }
 //--------------------------------------------------------------------------------------
+    public static Integer lcf(Integer num1, Integer num2) {
+        // Return the least common factor. Assume num1 >= num2
+        return lcf(num1, num2, num2);  // Start checking from the smaller number
+    }
+
+    private static Integer lcf(Integer num1, Integer num2, Integer factor) {
+        if (factor == 0) {  // Base case: No common factor, return 1
+            return 1;
+        }
+        if (num1 % factor == 0 && num2 % factor == 0) {  
+            return factor;  
+        }
+        return lcf(num1, num2, factor - 1);  // Recurse by checking the next smaller factor
+    }
+//--------------------------------------------------------------------------------------
     public static Integer maxElement(Integer array[]){
         //Find the maximum element in an array.
         if(array.length==0){
