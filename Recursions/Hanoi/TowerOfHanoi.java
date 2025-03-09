@@ -26,8 +26,10 @@ public class TowerOfHanoi {
         }else{
             solveTower(n-1,start,end,temp);     //Must move all smaller discs out of the way first.
         }
-        
-        Integer disc = start.pop();
+
+        //BEFORE THIS EXECUTES: the return from is/else calls to previous recursive call.
+        //EXAMPLE: if (1,A,B,C) executed then now (2,A,C,B) executes from here.
+        Integer disc = start.pop();            
         end.push(disc);
         
         solveTower(n-1, temp,start,end);
