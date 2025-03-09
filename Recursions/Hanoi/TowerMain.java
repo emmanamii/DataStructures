@@ -1,3 +1,5 @@
+//Just declares the pegs (stacks) and calls each function
+
 import java.util.Stack;
 
 public class testing {
