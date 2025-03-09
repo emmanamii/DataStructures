@@ -1,6 +1,6 @@
+//Game logic + prints current tower + calculate moves
 
 import java.util.Stack;
-
 
 public class TowerOfHanoi {
     
