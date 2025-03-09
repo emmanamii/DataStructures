@@ -6,9 +6,7 @@ import java.util.Stack;
 public class TowerOfHanoi {
     
     public static void printTower(Stack<Integer> start, Stack<Integer> temp, Stack<Integer> end){
-        System.out.println("A: " + start);
-        System.out.println("B: " +temp);
-        System.out.println("C: " +end);
+        System.out.println("A:" + start +" "+"B:" +temp+" "+"C:" +end);
     }
     public static Integer calculateMoves(Integer n){
         
