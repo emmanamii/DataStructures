@@ -1,4 +1,4 @@
-//Some recursive functions (practice)
+//Some recursive functions (practice). https://www.w3resource.com/java-exercises/recursive/index.php#null
 
 public class Functions {  
 
@@ -53,7 +53,17 @@ public class Functions {
                 //return statement continnues until (num*factorial(num-1)) == 1: where this is called in the base case (if statement)
     }
 //--------------------------------------------------------------------------------------
-    //fibonacci one can go here. still working on it.
+    public static Integer fibonacci(Integer integer){
+        //Calculates the nth Fibonacci number. 1 1 2 3 5 8
+        //Input: 6 = Output :8
+        if(integer==0){
+            return 0;
+        }
+        if(integer==1){
+            return 1;
+        }
+        return fibonacci(integer-1)+fibonacci(integer-2);
+    }
 //--------------------------------------------------------------------------------------    
     public static Integer gcd(Integer num1, Integer num2){
         //Returns the gcd. Assume num1 > num2
@@ -74,32 +84,92 @@ public class Functions {
 //--------------------------------------------------------------------------------------
     public static Integer countItems(Integer array[], Integer integer){
         //Method to count the number of occurrences of a specific element in an array.
-        Integer length = array.length;
-        return countItems(array,integer,length);
-        
+        return countItems(array,integer,0);
     }
-    private static Integer countItems(Integer array[],Integer integer, Integer length){
-        if(length==0){
+    private static Integer countItems(Integer array[],Integer integer, Integer index){
+        if(index==array.length){
             return 0;
         }
-        if(array[length-1].equals(integer)){
-            return 1+ countItems(array,integer, length-1);
+        if(array[index].equals(integer)){
+            return 1+ countItems(array,integer, index+1);
         }
-        return countItems(array,integer,length-1);
+        return countItems(array,integer,index+1);
     }
 //--------------------------------------------------------------------------------------
     public static Integer sumOfOddNumbers(Integer array[]){
         //Find the sum of all odd numbers in an array.
-         Integer length = array.length;
-         return sumOfOddNumbers(array, length);
+         return sumOfOddNumbers(array, 0);
     }
-    private static Integer sumOfOddNumbers(Integer array[], Integer length){
-        if(length==0){
+    private static Integer sumOfOddNumbers(Integer array[], Integer index){
+        if(index==array.length){
             return 0;
         }
-        if(array[length-1]%2==1){
-            return array[length-1]+ sumOfOddNumbers(array, length-1);
+        if(array[index]%2==1){
+            return array[index]+ sumOfOddNumbers(array, index+1);
         }
-        return sumOfOddNumbers(array, length-1);
+        return sumOfOddNumbers(array, index+1);
     }
 //--------------------------------------------------------------------------------------
+    public static Integer productOfAllNumbers(Integer array[]){
+        //calculate the product of all numbers in an array.
+        return productOfAllNumbers(array, 0);
+    }
+    private static Integer productOfAllNumbers(Integer array[], Integer index){
+        if(index==array.length){
+            return 1;
+        }
+        return array[index] * productOfAllNumbers(array, index+1);
+    }
+//--------------------------------------------------------------------------------------
+    public static Integer maxElement(Integer array[]){
+        //Find the maximum element in an array.
+        if(array.length==0){
+            return 0;
+        }
+        return maxElement(array, 0, Integer.MIN_VALUE);
+    }
+    private static Integer maxElement(Integer array[], Integer index, Integer element){
+        if(index==array.length){
+            return element;
+        }
+        if(array[index]>element){
+            element = array[index];
+        }
+        return maxElement(array,index+1,element);
+    }
+//--------------------------------------------------------------------------------------
+    public static boolean sortedCheck(Integer array[]){
+        //check if a given array is sorted in ascending order.
+        if (array == null || array.length <= 1) {
+            return true;
+        }
+        return sortedCheck(array, 0);
+    }
+    private static boolean sortedCheck(Integer array[], Integer index) {
+        if (index == array.length - 1) { 
+            return true;
+        }
+        if (array[index] > array[index + 1]) { 
+            return false;
+        }
+        return sortedCheck(array, index + 1); 
+    }
+//--------------------------------------------------------------------------------------
+    public static ArrayList<String> generatePermutations(String string){
+        //generate all possible permutations of a given string
+        ArrayList<String> permutations = new ArrayList<>();
+        generatePermutations(string,"",permutations);
+        return permutations;
+    }
+    private static void generatePermutations(String string, String current, ArrayList<String> permutations){
+        if(string.isEmpty()){
+            permutations.add(current);
+            return ;
+        }
+        for(int i=0;i<string.length();i++){
+            char character = string.charAt(i);
+            String remaining = string.substring(0, i) + string.substring(i + 1);
+            generatePermutations(remaining, current + character, permutations);
+        }
+    }
+}
