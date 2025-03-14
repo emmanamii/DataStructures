@@ -1,4 +1,5 @@
 //Node <E> is declared as an inner class within BinaryTree<E>
+//Node <E> is declared protected. This way we can use it as a superclass.
 
 protected static class Node<E> implements Serializable{
   
