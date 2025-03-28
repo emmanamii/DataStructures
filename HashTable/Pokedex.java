@@ -25,7 +25,7 @@ public class Pokedex {
             System.out.println("6: List all Pokemon.");
             System.out.println("7: Clear the Pokedex.");
             System.out.println("8: Pokemon battle!");
-            
+            System.out.println("9: Calculate power level.");
             System.out.println("10: Exit.");
             System.out.println("------------------------------------------");
             
@@ -80,7 +80,8 @@ public class Pokedex {
                 case 9:
                     System.out.println("Enter a move");
                     String move9 = scanner.nextLine();
-                    calculatePowerLevel(move9);
+                    System.out.println("Level: " + calculatePowerLevel(move9));
+                    break;
                 case 10:
                     return;
             }
@@ -91,7 +92,7 @@ public class Pokedex {
     
     public static void addPokemon(String pokemon, String move){
         //Case 1
-        if(dex.contains(pokemon)){
+        if(dex.containsKey(pokemon)){
             System.out.println("Pokemon already exists.");
             return;
         }
@@ -109,31 +110,37 @@ public class Pokedex {
     
     public static void updateMove(String pokemon, String move){
         //Case 3
-        if(dex.contains(pokemon)){
-            
+        if(dex.containsKey(pokemon)){
+            dex.put(pokemon ,move);
+            System.out.println("Successfully updated move.");
+            return;
         }
+        System.out.println("Pokemon does not exist.");
     }
     
     public static void removePokemon(String pokemon){
         //Case 4
-        if(dex.contains(pokemon)){
+        if(dex.containsKey(pokemon)){
             System.out.println("Does contain");
             dex.remove(pokemon);
             System.out.println("Successfully removed Pokemon");
+            return;
         }
+        System.out.println("Pokemon does not exist.");
     }
     
     public static boolean pokemonExists(String pokemon){
         //Case 5
-        if(dex.contains(pokemon)){
-            return true;
-        }
-        return false;
+        return dex.containsKey(pokemon);
     }
     
     public static void listPokemon(){
         //Case 6
-       System.out.println("Pokemon: in dex" + dex);
+        System.out.println("Pokemon in dex{");
+        for(String key : dex.keySet()){
+            System.out.println(key);
+        }
+       System.out.println("}");
     }
     
     public static void clearPokedex(){
