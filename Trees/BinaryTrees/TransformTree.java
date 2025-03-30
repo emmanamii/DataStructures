@@ -1,84 +1,96 @@
 
 import java.util.HashMap;
 
-//Given a binary search tree, change output 
+/**
+4. Write a method which, given the root of a tree or subtree, 
+* computes and returns the number of nodes in that tree or subtree.
+* You may not use the size() method; forget that it even existed to begin with. 
+* public static <E> int sizeTree(Node<E> root){
+
+You can use this node structure: 
+public class TreeNode {
+    public TreeNode right;
+    public TreeNode left;
+    public String data;
+}
+ */
 public class TransformTree {
+
     public static void main(String[] args) {
-        Node root = new Node(11);
+                                                /*----------------------------------------------------------*/
+        Node root = new Node(11);               //  Start:                  //   End:                       //
+        root.left = new Node(2);                //               11         //               119            //
+        root.right = new Node(29);              //            /    \        //            /      \          //
+                                                //           2      29      //          137       75        //
+                                                //         / \     /  \     //        /   \     /    \      //
+                                                //        1  7    15   40   //      139   130  104    0     //
+        root.left.left= new Node (1);           //                    /     //                       /      //
+        root.left.right = new Node (7);         //                   35     //                      40      //
+                                                //                          //                              //
+        root.right.left = new Node (15);        //                          //                              //
+        root.right.right = new Node(40);        /*----------------------------------------------------------*/
         
-        //Root children
-        root.left = new Node(2);
-        root.right = new Node(29);
+        root.right.right.left = new Node(35);
         
-        //Node 2 children
-        root.left.left = new Node(1);
-        root.left.right = new Node(7);
+        start(root);
+        System.out.print("Tree in order: ");
+        printTree(root);
         
-        //Node 29 Children
-        root.right.left= new Node(15);
-        root.right.right = new Node(40);
-        
-        //Node 40 Children
-        root.right.right.left = new Node (35);
-        
-        changeNodesToSum(root);
-        inOrder(root);
     }
     
-    public static void changeNodesToSum(Node root){
-        HashMap<Node, Integer> map = new HashMap<>();
-        changeTreeToGreaterSumTree(root, root, map);
-        preOrderTrav(root, map);
+    public static void start(Node root){
+        HashMap <Node, Integer> map = new HashMap<>();
+        iterateForCompare(root, root, map);
+        replaceTree(root, map);
     }
     
-    public static void preOrderTrav(Node root, HashMap<Node, Integer> map){
-        if(root==null){
+    public static void iterateForCompare(Node root, Node current, HashMap<Node, Integer> map){
+        //Before finding higher nodes, must iterate through each value to put into function compare()
+        if (current==null){
             return;
         }
-        root.data = map.getOrDefault(root,0);
-        preOrderTrav(root.left, map);
-        preOrderTrav(root.right, map);
+        compare(root, current, map);
+        iterateForCompare(root, current.left, map);
+        iterateForCompare(root, current.right, map);
     }
     
-    public static void inOrder(Node root){
-        if(root==null){
+    public static void compare(Node root, Node current /*current value we are comparing*/, HashMap<Node, Integer> map){
+        //Finding higher nodes.
+        //If found, add to the hashmap.
+                                
+        if( root == null){
             return;
         }
-        inOrder(root.left);
-        System.out.print(root.data + "," );
-        inOrder(root.right);
+        if(current.data < root.data){
+            map.put(current, map.getOrDefault(current,0) + root.data); 
+                            //map.get(current) -> if current DNE then map.get(0);
+        }
+        
+        compare(root.left, current, map);
+        compare(root.right, current, map);
     }
     
-    public static void findHigherNodes(Node root, Node current, HashMap<Node, Integer> map){
+    public static void replaceTree(Node root,HashMap<Node, Integer> map ){
         
-        /*
-        current Node    |       |
-        ----------------------
-        2               |   11  | <= 11+ 29 once 29 reached
-        
-        */
-        
-        
-        if(root ==null){
+        if(root == null){
             return;
         }
-        if(root.data > current.data){
-            map.put(current, map.getOrDefault(current,0) + root.data); { //check if already in the map
-            }
-        }
-        findHigherNodes(root.left, current, map);
-        findHigherNodes(root.right, current, map);
         
+        root.data = map.getOrDefault(root, 0);
+        
+        replaceTree(root.left, map);
+        replaceTree(root.right, map);
     }
     
-    public static void changeTreeToGreaterSumTree(Node root, Node current, HashMap<Node, Integer> map){
-        if(current==null){
+    public static void printTree(Node root){
+        //in order->    Left Root Right
+        if(root == null){
             return;
         }
-        findHigherNodes(root, current, map);
-        changeTreeToGreaterSumTree(root, current.left, map);
-        changeTreeToGreaterSumTree(root, current.right, map);
+        
+        printTree(root.left);
+        System.out.print(root.data + ", ");
+        printTree(root.right);
     }
-    
     
 }
